@@ -1,29 +1,17 @@
 import React from "react";
+import Toolbar from './components/Toolbar';
 
-class Title extends React.Component {
-  render() {
-    return <h1>{this.props.name}</h1>;
-  }
-}
-class Header extends React.Component {
-  render() {
-    return (
-      <div>
-        <Title name={this.props.name} />
-      </div>
-    );
-  }
-}
 class App extends React.Component {
   render() {
     return (
       <div>
-        <Header name="App Title" />
-        ...
+        <Toolbar>
+          <h1>Hello React</h1>
+          <h2>Component composition</h2>
+        </Toolbar>
       </div>
     );
   }
 }
 
 export default App;
-
