@@ -1,14 +1,30 @@
 import React from "react";
-import Toolbar from './components/Toolbar';
 
 class App extends React.Component {
+ 
+
   render() {
+    let parent = 200;
+    let height = 150;
+    const styles = {
+      toolbar: {
+        marginBottom: 20,
+        border: '1px solid red',
+      },
+      dark: {
+        background: 'purple',
+        color: 'white',
+      }
+    };
     return (
       <div>
-        <Toolbar>
-          <h1>Hello React</h1>
-          <h2>Component composition</h2>
-        </Toolbar>
+        <div style={{ marginBottom: parent - height,
+        border: '1px solid red' }}>
+          <h1>Hello, React!</h1>
+        </div>
+        <div style={{...styles.toolbar, ...styles.dark}}>
+          Hello, React2!
+        </div>
       </div>
     );
   }

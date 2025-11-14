@@ -1,9 +1,10 @@
 import React from "react";
+import './Toolbar.css';
 
 class Toolbar extends React.Component {
   render() {
     return (
-      <div style={{ background: "cyan", padding: 10 }}>
+      <div className="toolbar">
         {this.props.children}
       </div>
     );
