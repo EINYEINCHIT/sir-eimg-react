@@ -1,63 +1,76 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link, useParams } from "react-router-dom";
 
-// *** 1st Way ***
+const users = [
+  { id: 1, name: "Alice", gender: "f" },
+  { id: 2, name: "Bob", gender: "m" },
+  { id: 3, name: "Tom", gender: "m" },
+  { id: 4, name: "Mary", gender: "f" },
+];
 
-// const MyContext = React.createContext();
-// const App = props => {
-//   return (
-//     <MyContext.Provider name="Hello React">
-//       <Header />
-//     </MyContext.Provider>
-//   )
-// }
+const Male = (props) => {
+  return (
+    <ul>
+      {users
+        .filter((u) => u.gender === "m")
+        .map((u) => (
+          <li key={u.id}>{u.name}</li>
+        ))}
+    </ul>
+  );
+};
 
-// const Header = () => {
-//  return <Title />
-// }
+const Female = (props) => {
+  return (
+    <ul>
+      {users
+        .filter((u) => u.gender === "f")
+        .map((u) => (
+          <li key={u.id}>{u.name}</li>
+        ))}
+    </ul>
+  );
+};
 
-// const Title = () => {
-//   return (
-//     <MyContext.Consumer>
-//       { name => <h1>{name}</h1> }
-//     </MyContext.Consumer>
-//   )
-// }
+const User = (props) => {
+  const { name } = useParams();
+  return <h1>Profile – {name}</h1>;
+};
 
-// *** 2nd Way ***
-
-// const MyContext = React.createContext("Hello React");
-
-// const App = () => {
-//   return <Header />;
-// };
-// const Header = () => {
-//   return <Title />;
-// };
-// const Title = () => {
-//   const name = React.useContext(MyContext);
-//   return <h1>{name}</h1>;
-// };
-
-// *** 3rd Way ***
-
-const MyContext = React.createContext("Hello React");
-
-class App extends React.Component {
-  render() {
-    return <Header />;
-  }
-}
-class Header extends React.Component {
-  render() {
-    return <Title />;
-  }
-}
-class Title extends React.Component {
-  static contextType = MyContext;
-
-  render() {
-    return <h1>{this.context}</h1>;
-  }
-}
+const App = (props) => {
+  return (
+    <Router>
+      <div>
+        <ul>
+          <li>
+            <Link to="/male">Male</Link>
+          </li>
+          <li>
+            <Link to="/female">Female</Link>
+          </li>
+          <li>
+            <Link to="/user/Alice">Alice</Link>
+          </li>
+          <li>
+            <Link to="/user/Bob">Bob</Link>
+          </li>
+        </ul>
+        <div style={{ background: "cyan", padding: 20 }}>
+          <Switch>
+            <Route path="/male" exact>
+              <Male />
+            </Route>
+            <Route path="/female" exact>
+              <Female />
+            </Route>
+            <Route path="/user/:name">
+              <User />
+            </Route>
+          </Switch>
+        </div>
+      </div>
+    </Router>
+  );
+};
 
 export default App;
