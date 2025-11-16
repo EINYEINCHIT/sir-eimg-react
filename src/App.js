@@ -1,49 +1,63 @@
-import React, { createRef, useState } from "react";
+import React from "react";
 
-const Header = (props) => (
-  <div>
-    <h1>{props.name}</h1>
-  </div>
-);
+// *** 1st Way ***
 
-const Item = ({ name, price }) => (
-  <li>
-    {name},&nbsp; ${price}
-  </li>
-);
+// const MyContext = React.createContext();
+// const App = props => {
+//   return (
+//     <MyContext.Provider name="Hello React">
+//       <Header />
+//     </MyContext.Provider>
+//   )
+// }
 
-const App = (props) => {
-  let [items, setItems] = useState([
-    { id: 1, name: "Apple", price: 0.99 },
-    { id: 2, name: "Orange", price: 0.89 },
-  ]);
+// const Header = () => {
+//  return <Title />
+// }
 
-  let nameRef = createRef();
-  let priceRef = createRef();
+// const Title = () => {
+//   return (
+//     <MyContext.Consumer>
+//       { name => <h1>{name}</h1> }
+//     </MyContext.Consumer>
+//   )
+// }
 
-  let add = () => {
-    let id = items.length + 1;
-    let name = nameRef.current.value;
-    let price = priceRef.current.value;
+// *** 2nd Way ***
 
-    setItems([
-      ...items,
-      { id, name, price }
-    ]);
-  };
+// const MyContext = React.createContext("Hello React");
 
-  return (
-    <div>
-      <ul>
-        {items.map((i) => (
-          <Item key={i.id} name={i.name} price={i.price} />
-        ))}
-      </ul>
-      Name: <input type="text" ref={nameRef} /><br />
-      Price: <input type="number" ref={priceRef} /><br />
-      <button onClick={add}>Add</button>
-    </div>
-  );
-};
+// const App = () => {
+//   return <Header />;
+// };
+// const Header = () => {
+//   return <Title />;
+// };
+// const Title = () => {
+//   const name = React.useContext(MyContext);
+//   return <h1>{name}</h1>;
+// };
+
+// *** 3rd Way ***
+
+const MyContext = React.createContext("Hello React");
+
+class App extends React.Component {
+  render() {
+    return <Header />;
+  }
+}
+class Header extends React.Component {
+  render() {
+    return <Title />;
+  }
+}
+class Title extends React.Component {
+  static contextType = MyContext;
+
+  render() {
+    return <h1>{this.context}</h1>;
+  }
+}
 
 export default App;
