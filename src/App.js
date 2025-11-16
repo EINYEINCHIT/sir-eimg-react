@@ -1,33 +1,49 @@
-import React from "react";
+import React, { createRef, useState } from "react";
 
-class App extends React.Component {
- 
+const Header = (props) => (
+  <div>
+    <h1>{props.name}</h1>
+  </div>
+);
 
-  render() {
-    let parent = 200;
-    let height = 150;
-    const styles = {
-      toolbar: {
-        marginBottom: 20,
-        border: '1px solid red',
-      },
-      dark: {
-        background: 'purple',
-        color: 'white',
-      }
-    };
-    return (
-      <div>
-        <div style={{ marginBottom: parent - height,
-        border: '1px solid red' }}>
-          <h1>Hello, React!</h1>
-        </div>
-        <div style={{...styles.toolbar, ...styles.dark}}>
-          Hello, React2!
-        </div>
-      </div>
-    );
-  }
-}
+const Item = ({ name, price }) => (
+  <li>
+    {name},&nbsp; ${price}
+  </li>
+);
+
+const App = (props) => {
+  let [items, setItems] = useState([
+    { id: 1, name: "Apple", price: 0.99 },
+    { id: 2, name: "Orange", price: 0.89 },
+  ]);
+
+  let nameRef = createRef();
+  let priceRef = createRef();
+
+  let add = () => {
+    let id = items.length + 1;
+    let name = nameRef.current.value;
+    let price = priceRef.current.value;
+
+    setItems([
+      ...items,
+      { id, name, price }
+    ]);
+  };
+
+  return (
+    <div>
+      <ul>
+        {items.map((i) => (
+          <Item key={i.id} name={i.name} price={i.price} />
+        ))}
+      </ul>
+      Name: <input type="text" ref={nameRef} /><br />
+      Price: <input type="number" ref={priceRef} /><br />
+      <button onClick={add}>Add</button>
+    </div>
+  );
+};
 
 export default App;
